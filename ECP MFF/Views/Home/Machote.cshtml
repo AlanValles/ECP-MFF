@@ -1,0 +1,48 @@
+﻿@{
+    ViewBag.Title = "Machote de producto";
+}
+
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+<div class="container-fluid">
+    <br />
+    <div class="row">
+        <div class="col">
+            <div class="input-group">
+                <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" autofocus />
+                <button type="button" class="btn btn-outline-primary">search</button>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div align="center">
+        <img src="~/Images/producto-sin-imagen.png" class="img-fluid" style="width:300px; height:300px">
+    </div>
+    <br />
+    <div class="row">
+        <div class="col">
+            <form>
+                <div>
+                    <label for="pregunta1Peso" class="form-label">El peso del producto, ¿Se encuentra dentro del registrado en el empaque? (Tolerancia: menor 0, mayor 4%)</label>
+                    <input type="text" class="form-control" id="" readonly>
+                </div>
+                <div>
+                    <label for="pregunta2Sellado" class="form-label">¿La bolsa esta bien sellada en horizontal y vertical? (Debera como minimo tener 1cm de traslape)</label>
+                    <input type="text" class="form-control" id="" readonly>
+                </div>
+                <div>
+                    <label for="pregunta3Bolsa" class="form-label">La bolsa y perforacion estan alineadas</label>
+                    <input type="text" class="form-control" id="" readonly>
+                </div>
+                <div>
+                    <label for="pregunta4Sabor" class="form-label">Sabor del WIP</label>
+                    <input type="text" class="form-control" id="" readonly>
+                </div>
+                <div>
+                    <label for="pregunta5Textura" class="form-label">Textura de WIP</label>
+                    <input type="text" class="form-control" id="" readonly>
+                </div>
+            </form>
+        </div>
+    </div>

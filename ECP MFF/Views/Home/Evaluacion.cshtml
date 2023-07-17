@@ -1,0 +1,193 @@
+﻿@{
+    ViewBag.Title = "Evaluacion de producto";
+}
+<!-- Bootstrap -->
+
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+<div class="container-fluid">
+    <br />
+    <form>
+        <div class="row">
+            <div class="col">
+                <div class="mb-3">
+                    <label for="numReloj" class="form-label">Ingrese su numero de reloj</label>
+                    <input type="number" class="form-control" id="numReloj" required>
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3">
+                    <label for="lote" class="form-label">Ingrese el lote del producto a revisar</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal" id="btnModal">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
+                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                    <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
+                                </svg>
+                            </button>
+                        </div>
+                        <input id="lote" type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1" minlength="8" maxlength="8" required>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col">
+                <div>
+                    <label>Escane el codigo de barras o ingrese manualmente la numeracion que esta debajo del codigo de barras</label>
+                </div>
+                <div class="input-group">                    
+                    <input id="codigoBarras" type="search" class="form-control rounded" placeholder="Ingrese codigo de barras" aria-label="Search" aria-describedby="search-addon" required />
+                    <button type="button" class="btn btn-outline-primary">search</button>
+                </div>
+            </div>
+        </div>
+        @*<div align="center">
+            <img src="~/Images/producto-sin-imagen.png" class="img-fluid" style="width:300px; height:300px">
+        </div>*@
+        <div class="row">
+            <div class="col">
+                <div class="mb-3">
+                    <label for="nombreProducto" class="form-label">Producto a evaluar:</label>
+                    <input type="text" class="form-control" id="nombreProducto">
+                </div>
+                <div class="mb-3">
+                    <label id="pregunta1Peso" for="pregunta1Peso" class="form-label">El peso del producto, ¿Se encuentra dentro del registrado en el empaque? (Tolerancia: menor 0, mayor 4%)</label>
+                    <select id="selectPregunta1Peso" class="form-select required" aria-label="Default select example" required>
+                        <option value="">Selecciona una opcion</option>
+                        <option value="0">0 => Critico</option>
+                        <option value="25">25 => Malo</option>
+                        <option value="50">50 => Regular</option>
+                        <option value="75">75 => Bueno</option>
+                        <option value="100">100 => Excelente</option>
+                    </select>
+                    <span id="span1"></span>
+                </div>
+                <div class="mb-3">
+                    <label for="pregunta2Sellado" class="form-label">¿La bolsa esta bien sellada en horizontal y vertical? (Debera como minimo tener 1cm de traslape)</label>
+                    <select id="selectPregunta2Sellado" class="form-select" aria-label="Default select example" required>
+                        <option value="">Selecciona una opcion</option>
+                        <option value="0">0 => Critico</option>
+                        <option value="25">25 => Malo</option>
+                        <option value="50">50 => Regular</option>
+                        <option value="75">75 => Bueno</option>
+                        <option value="100">100 => Excelente</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="pregunta3Apariencia" class="form-label">¿La apariencia del WIP esta bien definida? (Impresion legible y no deforme)</label>
+                    <select id="selectpregunta3Apariencia" class="form-select" aria-label="Default select example" required>
+                        <option value="">Selecciona una opcion</option>
+                        <option value="0">0 => Critico</option>
+                        <option value="25">25 => Malo</option>
+                        <option value="50">50 => Regular</option>
+                        <option value="75">75 => Bueno</option>
+                        <option value="100">100 => Excelente</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="pregunta4Sabor" class="form-label">Sabor del WIP</label>
+                    <select id="selectPregunta4Sabor" class="form-select" aria-label="Default select example" required>
+                        <option value="">Selecciona una opcion</option>
+                        <option value="0">0 => Critico</option>
+                        <option value="25">25 => Malo</option>
+                        <option value="50">50 => Regular</option>
+                        <option value="75">75 => Bueno</option>
+                        <option value="100">100 => Excelente</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="pregunta5Textura" class="form-label">Textura de WIP</label>
+                    <select id="selectPregunta5Textura" class="form-select" aria-label="Default select example" required>
+                        <option value="">Selecciona una opcion</option>
+                        <option value="0">0 => Critico</option>
+                        <option value="25">25 => Malo</option>
+                        <option value="50">50 => Regular</option>
+                        <option value="75">75 => Bueno</option>
+                        <option value="100">100 => Excelente</option>
+                    </select>
+                </div>
+
+                <button id="submit" type="button" class="btn btn-primary">Terminar</button>
+
+            </div>
+        </div>
+    </form>
+</div>
+
+    <!-- Modal LOTE-->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ayuda visual: Lote de producto</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="~/Images/lote.png" class="img-fluid" alt="">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal LOTE-->
+
+<!-- SCRIPT VALIDAR FORMULARIO-->
+<script>
+    $("#submit").on("click", function (e) {
+        var model = {
+            numReloj: $("#numReloj").val(),
+            lote: $("#lote").val(),
+            codigoBarras: $("#codigoBarras").val(),
+            nombreProducto: $("#nombreProducto").val(),
+            p1Peso: $("#selectPregunta1Peso").val(),
+            p2Sellado: $("#selectPregunta2Sellado").val(),
+            p3Apariencia: $("#selectpregunta3Apariencia").val(),
+            p4Sabor: $("#selectPregunta4Sabor").val(),
+            p5Textura: $("#selectPregunta5Textura").val(),
+        };
+
+        $.ajax({
+            url: "/api/Submit/postValues",
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify(model),
+            success: function (result) {
+                alert("OK");
+            },
+            fail: function () {
+                alert("NO OK");
+            }
+        });
+    });
+    //$("form").on("submit", function (event) {
+        
+    //});
+</script>
+<!-- SCRIPT VALIDAR FORMULARIO-->
+
+
+<!-- Modal Campos no validos-->
+<div class="modal fade" id="modalCampoInvalido" tabindex="-1" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Erro en formulario</h5>
+            </div>
+            <div class="modal-body">
+                <label>El siguiente campo debe tener informacion valida:</label><br /><br />
+                <label id="lblModalCampoInvalido"></label>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Campos no validos-->
