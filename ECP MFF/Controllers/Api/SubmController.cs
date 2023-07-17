@@ -6,20 +6,20 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 
-namespace ECP_MFF.Api
+namespace ECP_MFF.Controllers.Api
 {
-    public class SubmitController : ApiController
+    public class SubmController : ApiController
     {
         [HttpPost]
-        [ActionName("postValues")]
-        public string postValues(model e)
+        [ActionName("getValues")]
+        public string getValues(model e)
         {
             string msg = string.Empty;
             decimal prom = (Convert.ToInt32(e.p1Peso) + Convert.ToInt32(e.p2Sellado) + Convert.ToInt32(e.p3Apariencia) + Convert.ToInt32(e.p4Sabor) + Convert.ToInt32(e.p5Textura)) / 5;
             try
             {
                 string connection = @"data source=SJLL-ALANV;initial catalog=ECP;Integrated Security=True";
-                using (SqlConnection con = new SqlConnection(connection)) 
+                using (SqlConnection con = new SqlConnection(connection))
                 {
                     con.Open();
                     SqlCommand cmd2 = new SqlCommand("INSERT INTO dbo.evaluaciones(numReloj,lote,codigoBarras,nombreProducto, p1Peso,p2Sellado,p3Apariencia,p4Sabor,p5Textura,promedio,fecha)" +
@@ -59,5 +59,7 @@ namespace ECP_MFF.Api
             public string p4Sabor { get; set; }
             public string p5Textura { get; set; }
         }
+
+
     }
 }

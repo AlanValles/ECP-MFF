@@ -153,10 +153,10 @@
         };
 
         $.ajax({
-            url: "/api/Submit/postValues",
+            url: "/api/subm/getValues",
             type: "POST",
             contentType: "application/json;charset=utf-8",
-            dataType: "json",
+            dataType: 'json',
             data: JSON.stringify(model),
             success: function (result) {
                 alert("OK");

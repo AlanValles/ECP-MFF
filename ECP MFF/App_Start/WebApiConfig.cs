@@ -24,7 +24,7 @@ namespace ECP_MFF.App_Start
                 defaults: new {id = RouteParameter.Optional}
             );
 
-            config.Routes.MapHttpRoute("Submit", "api/submit/{action}/", new { controller = "submit", id = RouteParameter.Optional });
+            config.Routes.MapHttpRoute("Submit", "api/subm/{action}/{id}", new { controller = "subm", id = RouteParameter.Optional });
         }
     }
 }
