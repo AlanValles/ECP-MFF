@@ -25,6 +25,7 @@ namespace ECP_MFF.App_Start
             );
 
             config.Routes.MapHttpRoute("Submit", "api/subm/{action}/{id}", new { controller = "subm", id = RouteParameter.Optional });
+            config.Routes.MapHttpRoute("Get", "api/get/{action}/{id}", new { controller = "get", id = RouteParameter.Optional });
         }
     }
 }

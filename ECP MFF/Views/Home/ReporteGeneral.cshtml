@@ -1,0 +1,168 @@
+﻿@{
+    ViewBag.Title = "Reporte General";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title.</h2>
+
+@*<link rel="stylesheet" href="~/Content/bootstrap-select.css">*@
+<link rel="stylesheet" href="~/Content/jquery.dataTables.min.css">
+<link rel="stylesheet" href="~/Content/buttons.dataTables.min.css">
+
+<script src="~/Scripts/jquery.dataTables.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/pdfmake.min.js"></script>
+<script src="~/Scripts/vfs_fonts.js"></script>
+
+<script src="~/Scripts/dataTables.buttons.min.js"></script>
+<script src="~/Scripts/jzip.min.js"></script>
+<script src="~/Scripts/buttons.html5.min.js"></script>
+
+<div class="container-fluid">
+    <br />
+    <div class="row">
+        <div class="col-4">
+            <label>Ingrese el codigo de barras o el numero de parte</label>
+            <input type="text" class="form-control rounded" id="codigoBarras" />
+        </div>
+        <div class="col-4">
+            <label>Ingrese la fecha inicial</label>
+            <input type="date" class="form-control rounded" id="fechaIni" />
+        </div>
+        <div class="col-4">
+            <label>Ingrese la fecha final</label>
+            <input type="date" class="form-control rounded" id="fechaFin" />
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-4">
+            <button id="btnBuscarEva" type="button" class="btn btn-primary">Buscar</button>
+        </div>
+    </div>
+    <hr />
+    <br />
+    <div class="row">
+        <div class="col-6" align="center">
+            <img src="~/Images/producto-sin-imagen.png" class="img-fluid" style="width:300px; height:300px">
+        </div>
+        <div class="col-6" align="center">
+            <label id="lblPromedio">100%</label>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+            <table id="reporteGeneral" class="display" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Numero de Reloj</th>
+                        <th>Turno</th>
+                        <th>Region del Lote</th>
+                        <th>El lote fue correcto?</th>
+                        <th>Lote Evaluado</th>
+                        <th>Codigo de Barras</th>
+                        <th>Nombre del Producto</th>
+                        <th>P1 Peso</th>
+                        <th>P2 Sellado</th>
+                        <th>P3 Apariencia</th>
+                        <th>P4 Sabor</th>
+                        <th>P5 Textura</th>
+                        <th>Promedio</th>
+                        <th>Fecha de evaluacion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (ViewBag == null)
+                    {
+                        <tr>
+                            <td></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        var table = $('#reporteGeneral').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'pdfHtml5',
+                    orientation: 'landscape',
+                    pageSize: 'LEGAL'
+                },
+                {
+                    extend: 'excelHtml5'
+
+                },
+                {
+                    extend: 'csvHtml5'
+                },
+                {
+                    extend: 'copyHtml5'
+                }
+            ]
+        });
+    });
+
+    $('#reporteGeneral').hide();
+    $("#btnBuscarEva").on("click", function (e) {
+        $('#reporteGeneral').show();
+        $('#reporteGeneral').DataTable().destroy();
+        var model = {
+            codigoBarras: $("#codigoBarras").val(),
+            fechaIni: $("#fechaIni").val(),
+            fechaFin: $("#fechaFin").val(),
+        };
+        var table = $('#reporteGeneral').DataTable({
+            'scrollx': 'true',
+            'scrollCollapse': 'true',
+            'autoWidth': 'false',
+            'ajax': {
+                "type": "POST",
+                "url": "/api/get/getInfoRow",
+                "data": model,
+                "dataSrc":""
+            },
+            'columns': [
+                { "data": "id" },
+                { "data": "numReloj" },
+                { "data": "turno" },
+                { "data": "regionLote" },
+                { "data": "loteCorrecto" },
+                { "data": "lote" },
+                { "data": "codigoBarras" },
+                { "data": "nombreProducto" },
+                { "data": "p1Peso" },
+                { "data": "p2Sellado" },
+                { "data": "p3Apariencia" },
+                { "data": "p4Sabor" },
+                { "data": "p5Textura" },
+                { "data": "promedio" },
+                { "data": "fecha" },
+            ]
+        });
+
+        $.ajax({
+            url: "/api/get/getInfoRow",
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: 'json',
+            data: JSON.stringify(model),
+            success: function (result) {
+                if (result == "Producto no encontrado") {
+                    alert("OK");
+                } else {
+                    alert("BAD");
+                }
+
+            },
+            fail: function () {
+
+            }
+        });
+    });
+</script>

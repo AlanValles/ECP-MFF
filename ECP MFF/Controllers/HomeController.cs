@@ -20,9 +20,9 @@ namespace ECP_MFF.Controllers
             return View();
         }
 
-        public ActionResult Machote()
+        public ActionResult ReporteGeneral()
         {
-            ViewBag.Message = "Seccion para revisar machotes, por favor escane o digite manualmente el numero que aparece en el codigo de barras";
+            ViewBag.Message = "";
 
             return View();
         }

@@ -4,56 +4,90 @@
 <!-- Bootstrap -->
 
 <h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
 
 <div class="container-fluid">
     <br />
-    <form>
+    <form id="formEvaluacion">
         <div class="row">
-            <div class="col">
-                <div class="mb-3">
-                    <label for="numReloj" class="form-label">Ingrese su numero de reloj</label>
-                    <input type="number" class="form-control" id="numReloj" required>
-                </div>
+            <div class="col-6">
+                <label for="numReloj" class="form-label">Ingrese su numero de reloj</label>
+                <input type="number" class="form-control" id="numReloj" required>
             </div>
-            <div class="col">
-                <div class="mb-3">
-                    <label for="lote" class="form-label">Ingrese el lote del producto a revisar</label>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal" id="btnModal">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
-                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                                    <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
-                                </svg>
-                            </button>
-                        </div>
-                        <input id="lote" type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1" minlength="8" maxlength="8" required>
-                    </div>
+            <div class="col-6">
+                <label for="turno" class="form-label">Selecciona un turno</label>
+                <select id="turno" class="form-select" aria-label="Default select example" required>
+                    <option value="">Selecciona una opcion</option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                </select>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <label class="form-label">Seleccione la region del Lote</label>
+            <input type="radio" id="emptyFlag" name="flag" value="" style="height:35px; width:35px; vertical-align: middle;" checked hidden>
+            <div class="col-4">
+                <input type="radio" id="MX" name="flag" value="MX" style="height:35px; width:35px; vertical-align: middle;">
+                <img src="~/Images/mxflag.png" class="img-fluid" style="width:150px; height:100px">
+            </div>
+            <div class="col-4">
+                <input type="radio" id="USA" name="flag" value="USA" style="height:35px; width:35px; vertical-align: middle;">
+                <img src="~/Images/usaflag.png" class="img-fluid" style="width:150px; height:100px">
+            </div>
+            <div class="col-4">
+                <input type="radio" id="CAN" name="flag" value="CAN" style="height:35px; width:35px; vertical-align: middle;">
+                <img src="~/Images/canflag.png" class="img-fluid" style="width:150px; height:100px">
+            </div>
+            <input type="text" id="regionSeleccionada" value="" hidden />
+            <br />
+        </div>
+        <div class="row">
+            <label for="lote" class="form-label">Ingrese el lote del producto a revisar</label>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal" id="btnModal">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                            <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
+                        </svg>
+                    </button>
                 </div>
+                <input id="lote" type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1" required>
+                &nbsp&nbsp&nbsp
+                <button id="verificarLote" type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="">Verificar Lote</button>
+                <input type="text" id="loteCorrecto" value="" hidden />
             </div>
         </div>
         <hr />
         <div class="row">
-            <div class="col">
+            <div class="col-6">
                 <div>
-                    <label>Escane el codigo de barras o ingrese manualmente la numeracion que esta debajo del codigo de barras</label>
+                    <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#modalInformacionCodigoBarras" id="btnModal">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                            <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
+                        </svg>
+                    </button>
+                    <label>Escane el codigo de barras o ingreselo manualmente</label>
                 </div>
-                <div class="input-group">                    
+                <div class="input-group">
                     <input id="codigoBarras" type="search" class="form-control rounded" placeholder="Ingrese codigo de barras" aria-label="Search" aria-describedby="search-addon" required />
-                    <button type="button" class="btn btn-outline-primary">search</button>
+                    <button type="button" id="btnBuscar" class="btn btn-outline-primary">Buscar</button>
                 </div>
             </div>
+            <div class="col-6">
+                <label for="nombreProducto" class="form-label">Producto a evaluar:</label>
+                <input type="text" class="form-control" id="nombreProducto" disabled>
+            </div>
         </div>
+        <br />
         @*<div align="center">
-            <img src="~/Images/producto-sin-imagen.png" class="img-fluid" style="width:300px; height:300px">
-        </div>*@
+                <img src="~/Images/producto-sin-imagen.png" class="img-fluid" style="width:300px; height:300px">
+            </div>*@
         <div class="row">
             <div class="col">
-                <div class="mb-3">
-                    <label for="nombreProducto" class="form-label">Producto a evaluar:</label>
-                    <input type="text" class="form-control" id="nombreProducto">
-                </div>
                 <div class="mb-3">
                     <label id="pregunta1Peso" for="pregunta1Peso" class="form-label">El peso del producto, ¿Se encuentra dentro del registrado en el empaque? (Tolerancia: menor 0, mayor 4%)</label>
                     <select id="selectPregunta1Peso" class="form-select required" aria-label="Default select example" required>
@@ -79,7 +113,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="pregunta3Apariencia" class="form-label">¿La apariencia del WIP esta bien definida? (Impresion legible y no deforme)</label>
-                    <select id="selectpregunta3Apariencia" class="form-select" aria-label="Default select example" required>
+                    <select id="selectPregunta3Apariencia" class="form-select" aria-label="Default select example" required>
                         <option value="">Selecciona una opcion</option>
                         <option value="0">0 => Critico</option>
                         <option value="25">25 => Malo</option>
@@ -117,77 +151,352 @@
         </div>
     </form>
 </div>
-
-    <!-- Modal LOTE-->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ayuda visual: Lote de producto</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <img src="~/Images/lote.png" class="img-fluid" alt="">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Modal LOTE-->
-
-<!-- SCRIPT VALIDAR FORMULARIO-->
 <script>
-    $("#submit").on("click", function (e) {
+    $("#btnBuscar").on("click", function (e) {
         var model = {
-            numReloj: $("#numReloj").val(),
-            lote: $("#lote").val(),
             codigoBarras: $("#codigoBarras").val(),
-            nombreProducto: $("#nombreProducto").val(),
-            p1Peso: $("#selectPregunta1Peso").val(),
-            p2Sellado: $("#selectPregunta2Sellado").val(),
-            p3Apariencia: $("#selectpregunta3Apariencia").val(),
-            p4Sabor: $("#selectPregunta4Sabor").val(),
-            p5Textura: $("#selectPregunta5Textura").val(),
         };
 
         $.ajax({
-            url: "/api/subm/getValues",
+            url: "/api/get/getInfo",
             type: "POST",
             contentType: "application/json;charset=utf-8",
             dataType: 'json',
             data: JSON.stringify(model),
             success: function (result) {
-                alert("OK");
+                if (result == "Producto no encontrado") {
+                    $("#lblTextoInformacion").empty();
+                    $("#lblModalCampoInvalido").empty();
+                    document.getElementById("nombreProducto").value = "";
+
+                    $('#modalCampoInvalido').modal('show');
+                    $("#lblTextoInformacion").append(result);
+                    $("#lblModalCampoInvalido").append("Codigo de barras incorrecto o el producto aun no existe en la base de datos.");
+                } else {
+                    document.getElementById("nombreProducto").value = result;
+                }
+
             },
             fail: function () {
-                alert("NO OK");
+
             }
         });
     });
-    //$("form").on("submit", function (event) {
-        
-    //});
+
+    $("#verificarLote").on("click", function (e) {
+        $("#lblRegionSeleccionada").empty();
+        $("#lblCaracteresCorrecto").empty();
+        $("#lblCaracteresIngresados").empty();
+        $("#lblModalCampoInvalido").empty();
+        $("#textoInformacionVerificarLote").empty();
+        $("#lblTextoInformacion").empty();
+
+
+        if (document.getElementById('emptyFlag').checked == true) {
+            $('#modalCampoInvalido').modal('show');
+            $("#lblModalCampoInvalido").append("Seleccione una region del Lote");
+            return;
+        }
+        var regionSeleccionada = "";
+        var regionValor = "";
+        if (document.getElementById('MX').checked == true) {
+            regionValor = 22;
+            regionSeleccionada = "MX";
+        }
+        if (document.getElementById('USA').checked == true) {
+            regionValor = 19;
+            regionSeleccionada = "USA";
+        }
+        if (document.getElementById('CAN').checked == true) {
+            regionValor = 18;
+            regionSeleccionada = "CAN";
+        }
+        document.getElementById("regionSeleccionada").value = regionSeleccionada;
+
+        if (document.querySelectorAll('#lote')[0].value == "") {
+            $('#modalCampoInvalido').modal('show');
+            $("#lblTextoInformacion").append("El siguiente campo debe tener informacion valida:");
+            $("#lblModalCampoInvalido").append("Lote");
+            return;
+        }
+        var valueLote = document.getElementById('lote');
+        var sizeValue = valueLote.value.length;
+        var loteCorrecto = "";
+        if (valueLote.value.length == regionValor) {
+            loteCorrecto = "SI";
+        }
+        else {
+            loteCorrecto = "NO";
+        }
+        document.getElementById("loteCorrecto").value = loteCorrecto;
+
+        if (loteCorrecto == "SI") {
+            $("#textoInformacionVerificarLote").append("EL LOTE INGRESADO ES CORRECTO");
+        } else {
+            $("#textoInformacionVerificarLote").append("IMPORTANTE: Verifica que hayas ingresado todos los campos del lote del producto, ya que el Lote ingresado no cumple con las especificaciones, si el error esta en la bolsa, favor de continuar con la evaluacion.");
+        }
+        $("#lblRegionSeleccionada").append(regionSeleccionada);
+        $("#lblCaracteresCorrecto").append(regionValor);
+        $("#lblCaracteresIngresados").append(sizeValue);
+        $('#modalVerificacion').modal('show');
+    });
+
+    $("#submit").on("click", function (e) {
+        $("#lblModalCampoInvalido").empty();
+        $("#lblTextoInformacion").empty();
+
+        $("#lblTextoInformacion").append("El siguiente campo debe tener informacion valida:");
+
+        if (document.querySelectorAll('#numReloj')[0].value == "") {
+            $('#modalCampoInvalido').modal('show');
+            $("#lblModalCampoInvalido").append("Numero de reloj");
+            return;
+        }
+        if (document.querySelectorAll('#turno')[0].value == "") {
+            $('#modalCampoInvalido').modal('show');
+            $("#lblTextoInformacion").empty();
+            $("#lblTextoInformacion").append("Debe seleccionar una opcion valida");
+            $("#lblModalCampoInvalido").append("Turno");
+            return;
+        }
+        if (document.getElementById('emptyFlag').checked == true) {
+            $('#modalCampoInvalido').modal('show');
+            $("#lblModalCampoInvalido").append("Seleccione una region del Lote");
+            return;
+        }
+        var regionSeleccionada = "";
+        var regionValor = "";
+        if (document.getElementById('MX').checked == true) {
+            regionValor = 22;
+            regionSeleccionada = "MX";
+        }
+        if (document.getElementById('USA').checked == true) {
+            regionValor = 19;
+            regionSeleccionada = "USA";
+        }
+        if (document.getElementById('CAN').checked == true) {
+            regionValor = 18;
+            regionSeleccionada = "CAN";
+        }
+        document.getElementById("regionSeleccionada").value = regionSeleccionada;
+
+        if (document.querySelectorAll('#lote')[0].value == "") {
+            $('#modalCampoInvalido').modal('show');
+            $("#lblModalCampoInvalido").append("Lote");
+            return;
+        }
+        var valueLote = document.getElementById('lote');
+        var loteCorrecto = "";
+        if (valueLote.value.length == regionValor) {
+            loteCorrecto = "SI";
+        }
+        else {
+            loteCorrecto = "NO";
+        }
+        document.getElementById("loteCorrecto").value = loteCorrecto;
+
+        if (document.querySelectorAll('#codigoBarras')[0].value == "") {
+            $('#modalCampoInvalido').modal('show');
+            $("#lblModalCampoInvalido").append("Codigo de barras");
+            return;
+        }
+        if (document.querySelectorAll('#nombreProducto')[0].value == "") {
+            $('#modalCampoInvalido').modal('show');
+            $("#lblModalCampoInvalido").append("Nombre del producto (Para que aparezca datos, debe escanear o ingresar manualmente el codigo de barras");
+            return;
+        }
+        if (document.querySelectorAll('#selectPregunta1Peso')[0].value == "") {
+            $('#modalCampoInvalido').modal('show');
+            $("#lblTextoInformacion").empty();
+            $("#lblTextoInformacion").append("Debe seleccionar una opcion valida");
+            $("#lblModalCampoInvalido").append("Peso del producto");
+            return;
+        }
+        if (document.querySelectorAll('#selectPregunta2Sellado')[0].value == "") {
+            $('#modalCampoInvalido').modal('show');
+            $("#lblTextoInformacion").empty();
+            $("#lblTextoInformacion").append("Debe seleccionar una opcion valida");
+            $("#lblModalCampoInvalido").append("Sellado del producto");
+            return;
+        }
+        if (document.querySelectorAll('#selectPregunta3Apariencia')[0].value == "") {
+            $('#modalCampoInvalido').modal('show');
+            $("#lblTextoInformacion").empty();
+            $("#lblTextoInformacion").append("Debe seleccionar una opcion valida");
+            $("#lblModalCampoInvalido").append("Apariencia del WIP");
+            return;
+        }
+        if (document.querySelectorAll('#selectPregunta4Sabor')[0].value == "") {
+            $('#modalCampoInvalido').modal('show');
+            $("#lblTextoInformacion").empty();
+            $("#lblTextoInformacion").append("Debe seleccionar una opcion valida");
+            $("#lblModalCampoInvalido").append("Sabor del WIP");
+            return;
+        }
+        if (document.querySelectorAll('#selectPregunta5Textura')[0].value == "") {
+            $('#modalCampoInvalido').modal('show');
+            $("#lblTextoInformacion").empty();
+            $("#lblTextoInformacion").append("Debe seleccionar una opcion valida");
+            $("#lblModalCampoInvalido").append("Textura del WIP");
+            return;
+        }
+        else {
+            var model = {
+                numReloj: $("#numReloj").val(),
+                turno: $("#turno").val(),
+                regionSeleccionada: $("#regionSeleccionada").val(),
+                loteCorrecto: $("#loteCorrecto").val(),
+                lote: $("#lote").val(),
+                codigoBarras: $("#codigoBarras").val(),
+                nombreProducto: $("#nombreProducto").val(),
+                p1Peso: $("#selectPregunta1Peso").val(),
+                p2Sellado: $("#selectPregunta2Sellado").val(),
+                p3Apariencia: $("#selectPregunta3Apariencia").val(),
+                p4Sabor: $("#selectPregunta4Sabor").val(),
+                p5Textura: $("#selectPregunta5Textura").val(),
+            };
+
+            $.ajax({
+                url: "/api/subm/getValues",
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                dataType: 'json',
+                data: JSON.stringify(model),
+                success: function (result) {
+                    $('#modalSuccess').modal('show');
+                    $("#formEvaluacion").trigger("reset");
+                },
+                fail: function () {
+                    alert(result);
+                }
+            });
+        }
+    });
 </script>
-<!-- SCRIPT VALIDAR FORMULARIO-->
-
-
+<!-- Modal LOTE-->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ayuda visual: Lote de producto</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-5">
+                        <img src="~/Images/mxflag.png" class="img-fluid">
+                    </div>
+                    <div class="col-7">
+                        <img src="~/Images/loteMX.png" class="img-fluid">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-5">
+                        <img src="~/Images/usaflag.png" class="img-fluid">
+                    </div>
+                    <div class="col-7">
+                        <img src="~/Images/loteUSA.png" class="img-fluid">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-5">
+                        <img src="~/Images/canflag.png" class="img-fluid">
+                    </div>
+                    <div class="col-7">
+                        <img src="~/Images/loteCAN.png" class="img-fluid">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal LOTE-->
 <!-- Modal Campos no validos-->
 <div class="modal fade" id="modalCampoInvalido" tabindex="-1" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Erro en formulario</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle">Error en formulario</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <label>El siguiente campo debe tener informacion valida:</label><br /><br />
+                <label id="lblTextoInformacion"></label><br /><br />
                 <label id="lblModalCampoInvalido"></label>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
 </div>
 <!-- Modal Campos no validos-->
+<!-- VERIFICAR LOTE-->
+<div class="modal fade" id="modalVerificacion" tabindex="-1" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Confirmacion de datos</h5>
+            </div>
+            <div class="modal-body">
+                <label id="textoInformacionVerificarLote"></label>
+                <br />
+                <br />
+                <label id="">Region Seleccionada: </label>
+                <br />
+                <label id="lblRegionSeleccionada"></label>
+                <br />
+                <label id="">Numero de caracteres que debe cumplir</label>
+                <br />
+                <label id="lblCaracteresCorrecto"></label>
+                <br />
+                <label id="">Numero de caracteres ingresados</label>
+                <br />
+                <label id="lblCaracteresIngresados"></label>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- VERIFICAR LOTE-->
+<!-- INFORMACION DE CODIGO DE BARRAS -->
+<div class="modal fade" id="modalInformacionCodigoBarras" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">El producto no tiene Codigo de Barras</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Si el producto que esta en evaluacion no contiene un "Codigo de Barras", ingresa manualmente el "Numero de Parte" del producto
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- INFORMACION DE CODIGO DE BARRAS -->
+<!--MODAL SUCCESS-->
+<div class="modal fade" id="modalSuccess" tabindex="-1" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Evaluacion terminada</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <label id="lblTextoInformacion">La Evaluacion se ha guardado exitosamente</label><br /><br />
+                <img src="~/Images/success.gif" class="img-fluid" alt="" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--MODAL SUCCESS-->
