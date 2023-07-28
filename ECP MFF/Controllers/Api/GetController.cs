@@ -33,7 +33,7 @@ namespace ECP_MFF.Controllers.Api
             try
             {
                 DataTable dataTable = new DataTable();
-                string connection = @"data source=SJLL-ALANV;initial catalog=ECP;Integrated Security=True";
+                string connection = @"data source=LEDD-ALAVIDSJ\SQLEXPRESS;initial catalog=ECP;Integrated Security=True";
                 SqlConnection con = new SqlConnection(connection);
                 con.Open();
                 SqlCommand cmd2 = new SqlCommand(qry, con);
@@ -55,7 +55,7 @@ namespace ECP_MFF.Controllers.Api
         {
             DateTime dtIni = Convert.ToDateTime(e.fechaIni).Date;
             DateTime dtFin = Convert.ToDateTime(e.fechaFin).Date;
-            DataTable dt = getValRow("SELECT * FROM dbo.evaluaciones WHERE codigoBarras='" + e.codigoBarras.ToString().ToUpper() + "'");
+            DataTable dt = getValRow("SELECT * FROM dbo.evaluaciones WHERE codigoBarras='" + e.codigoBarras.ToString().ToUpper() + "' AND cast(fecha AS date) BETWEEN '"+dtIni+"' AND '"+dtFin+"'");
 
             foreach (DataRow row in dt.Rows)
             {
@@ -84,7 +84,7 @@ namespace ECP_MFF.Controllers.Api
             try
             {
                 DataTable dataTable = new DataTable();
-                string connection = @"data source=SJLL-ALANV;initial catalog=ECP;Integrated Security=True";
+                string connection = @"data source=LEDD-ALAVIDSJ\SQLEXPRESS;initial catalog=ECP;Integrated Security=True";
                 SqlConnection con = new SqlConnection(connection);
                 con.Open();
                 SqlCommand cmd2 = new SqlCommand(qry, con);

@@ -18,7 +18,7 @@ namespace ECP_MFF.Controllers.Api
             decimal prom = (Convert.ToInt32(e.p1Peso) + Convert.ToInt32(e.p2Sellado) + Convert.ToInt32(e.p3Apariencia) + Convert.ToInt32(e.p4Sabor) + Convert.ToInt32(e.p5Textura)) / 5;
             try
             {
-                string connection = @"data source=SJLL-ALANV;initial catalog=ECP;Integrated Security=True";
+                string connection = @"data source=LEDD-ALAVIDSJ\SQLEXPRESS;initial catalog=ECP;Integrated Security=True";
                 using (SqlConnection con = new SqlConnection(connection))
                 {
                     con.Open();
