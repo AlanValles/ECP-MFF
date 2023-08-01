@@ -5,7 +5,8 @@
 
 <h2>@ViewBag.Title.</h2>
 
-@*<link rel="stylesheet" href="~/Content/bootstrap-select.css">*@
+@*<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css">*@
+@*<link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/4.3.0/css/fixedColumns.dataTables.min.css">*@
 <link rel="stylesheet" href="~/Content/jquery.dataTables.min.css">
 <link rel="stylesheet" href="~/Content/buttons.dataTables.min.css">
 
@@ -17,6 +18,8 @@
 <script src="~/Scripts/dataTables.buttons.min.js"></script>
 <script src="~/Scripts/jzip.min.js"></script>
 <script src="~/Scripts/buttons.html5.min.js"></script>
+@*<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js">*@
+@*<link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/4.3.0/js/dataTables.fixedColumns.min.js">*@
 
 <div class="container-fluid">
     <br />
@@ -44,71 +47,48 @@
     <br />
     <div class="row">
         <div class="col-6" align="center">
-            <img src="~/Images/producto-sin-imagen.png" class="img-fluid" style="width:300px; height:300px">
+            <img id="imgProducto" src="~/Images/producto-sin-imagen.png" class="img-fluid" style="width:300px; height:300px">
         </div>
         <div class="col-6" align="center">
             <label id="lblPromedio">0%</label>
         </div>
     </div>
     <br />
-    <div class="row">
-        <table id="reporteGeneral" class="display" style="width:100%">
-            <thead>
+    <table id="reporteGeneral" class="display table-striped table-bordered" style="width:100%">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th># de Reloj</th>
+                <th>Planta</th>
+                <th>Turno</th>
+                <th>Region</th>
+                <th>Lote Correcto?</th>
+                <th>LoteEvaluado(Identificador)</th>
+                <th>CodigoBarras</th>
+                <th>Nom. del Producto</th>
+                <th>P1 Peso</th>
+                <th>P2 Sellado</th>
+                <th>P3 Apariencia</th>
+                <th>P4 Sabor</th>
+                <th>P5 Textura</th>
+                <th>Promedio</th>
+                <th>Fecha de evaluacion</th>
+                @*<th>Button</th>*@
+            </tr>
+        </thead>
+        <tbody>
+            @if (ViewBag == null)
+            {
                 <tr>
-                    <th>ID</th>
-                    <th>Numero de Reloj</th>
-                    <th>Turno</th>
-                    <th>Region del Lote</th>
-                    <th>El lote fue correcto?</th>
-                    <th>Lote Evaluado</th>
-                    <th>Codigo de Barras</th>
-                    <th>Nombre del Producto</th>
-                    <th>P1 Peso</th>
-                    <th>P2 Sellado</th>
-                    <th>P3 Apariencia</th>
-                    <th>P4 Sabor</th>
-                    <th>P5 Textura</th>
-                    <th>Promedio</th>
-                    <th>Fecha de evaluacion</th>
+                    <td></td>
                 </tr>
-            </thead>
-            <tbody>
-                @if (ViewBag == null)
-                {
-                    <tr>
-                        <td></td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
+            }
+        </tbody>
+    </table>
 </div>
 
-<script>
-    //$(document).ready(function () {
-    //    var table = $('#reporteGeneral').DataTable({
-    //        dom: 'Bfrtip',
-    //        buttons: [
-    //            {
-    //                extend: 'pdfHtml5',
-    //                orientation: 'landscape',
-    //                pageSize: 'LEGAL'
-    //            },
-    //            {
-    //                extend: 'excelHtml5'
-
-    //            },
-    //            {
-    //                extend: 'csvHtml5'
-    //            },
-    //            {
-    //                extend: 'copyHtml5'
-    //            }
-    //        ]
-    //    });
-    //});
-
-    $('#reporteGeneral').hide();
+<script>    
+    $('#reporteGeneral').hide();   
     $("#btnBuscarEva").on("click", function (e) {
         $("#lblTextoInformacion").empty();
         $("#lblModalCampoInvalido").empty();
@@ -133,7 +113,7 @@
         var fechaI = document.getElementById("fechaIni").value;
         var fechaF = document.getElementById("fechaFin").value;
 
-        if (fechaI>fechaF) {
+        if (fechaI > fechaF) {
             $('#modalCampoInvalido').modal('show');
             $("#lblTextoInformacion").append("Error en las fechas seleccionadas");
             $("#lblModalCampoInvalido").append("Fecha inicial es mayor a la Fecha final");
@@ -147,9 +127,10 @@
             fechaFin: $("#fechaFin").val(),
         };
         var table = $('#reporteGeneral').DataTable({
-            'scrollx': 'true',
-            'scrollCollapse': 'true',
-            'autoWidth': 'false',
+            'scrollX': true,
+            'responsive': true,
+            'autoWidth': false,
+            'fixedColumns': true,
             'dom': 'Bfrtip',
             'buttons': [
                 {
@@ -176,6 +157,7 @@
             'columns': [
                 { "data": "id" },
                 { "data": "numReloj" },
+                { "data": "planta" },
                 { "data": "turno" },
                 { "data": "regionLote" },
                 { "data": "loteCorrecto" },
@@ -189,7 +171,22 @@
                 { "data": "p5Textura" },
                 { "data": "promedio" },
                 { "data": "fecha" },
-            ]
+                //{ "defaultContent": "<button class='detalles'>Detalles</button>" }
+            ],
+            'createdRow': function (row, data, dataIndex) {
+                if (data.promedio >= 90) {
+                    $(row).addClass('greenClass');
+                }
+                if (data.promedio <= 89) {
+                    $(row).addClass('yellowClass');
+                }
+                if (data.promedio <= 74) {
+                    $(row).addClass('orangeClass');
+                }
+                if (data.promedio <= 50) {
+                    $(row).addClass('redClass');
+                }
+            }
         });
 
         $.ajax({
@@ -198,15 +195,31 @@
             contentType: "application/json;charset=utf-8",
             dataType: 'json',
             data: JSON.stringify(model),
-            success: function (result) {
+            success: function (result) {                
                 $("#lblPromedio").empty();
+                var codigoB="";
                 var promedio = 0;
                 var cont = 0;
                 jQuery.each(result, function (i, val) {
+                    codigoB = val.codigoBarras;
                     promedio = promedio + parseInt(val.promedio);
                     cont++;
-                });                
-                $("#lblPromedio").append(promedio/cont+"%");
+                });
+                var prom = promedio / cont;
+                $("#lblPromedio").append(prom + "%");
+                if (prom >=90) {
+                    $("#lblPromedio").css("background-color", "lawngreen");                 
+                }
+                if (prom <= 89) {
+                    $("#lblPromedio").css("background-color", "yellow");
+                }
+                if (prom <= 74) {
+                    $("#lblPromedio").css("background-color", "orange");
+                }
+                if (prom <= 50) {
+                    $("#lblPromedio").css("background-color", "red");
+                }
+                $("#imgProducto").attr("src","/Images/Products/"+codigoB+".png");
             },
             fail: function () {
 
@@ -234,3 +247,22 @@
     </div>
 </div>
 <!-- Modal Campos no validos-->
+<!-- Modal VISTA DETALLADA-->
+<div class="modal fade" id="modalVistaDetallada" tabindex="-1" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Error en formulario</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <label id="lblTextoInformacion"></label><br /><br />
+                <label id="lblModalCampoInvalido"></label>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal VISTA DETALLADA-->

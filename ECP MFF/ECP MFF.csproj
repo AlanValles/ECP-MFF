@@ -155,6 +155,8 @@
     <Content Include="Images\loteUSA.png" />
     <Content Include="Images\mxflag.png" />
     <Content Include="Images\producto-sin-imagen.png" />
+    <Content Include="Images\Products\064900429705.png" />
+    <Content Include="Images\Products\S9W100922.png" />
     <Content Include="Images\success.gif" />
     <Content Include="Images\usaflag.png" />
     <Content Include="Scripts\bootstrap-select.js" />

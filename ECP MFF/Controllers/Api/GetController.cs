@@ -64,6 +64,7 @@ namespace ECP_MFF.Controllers.Api
                     ID = row["id"] is DBNull ? 0 : Convert.ToInt32(row["id"]),
                     codigoBarras = row["codigoBarras"] is DBNull ? "" : row["codigoBarras"].ToString(),
                     numReloj = row["numReloj"] is DBNull ? 0 : Convert.ToInt32(row["numReloj"]),
+                    planta = row["planta"] is DBNull ? "" : row["planta"].ToString(),
                     turno = row["turno"] is DBNull ? "" : row["turno"].ToString(),
                     regionLote = row["regionLote"] is DBNull ? "" : row["regionLote"].ToString(),
                     loteCorrecto = row["loteCorrecto"] is DBNull ? "" : row["loteCorrecto"].ToString(),
@@ -118,6 +119,7 @@ namespace ECP_MFF.Controllers.Api
             public int ID { get; set; }
             public string codigoBarras { get; set; }            
             public int numReloj { get; set; }
+            public string planta{ get; set; }
             public string turno { get; set; }
             public string regionLote { get; set; }
             public string loteCorrecto { get; set; }

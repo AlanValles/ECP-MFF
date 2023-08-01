@@ -22,9 +22,10 @@ namespace ECP_MFF.Controllers.Api
                 using (SqlConnection con = new SqlConnection(connection))
                 {
                     con.Open();
-                    SqlCommand cmd2 = new SqlCommand("INSERT INTO dbo.evaluaciones(numReloj,turno,regionLote,loteCorrecto,lote,codigoBarras,nombreProducto,p1Peso,p2Sellado,p3Apariencia,p4Sabor,p5Textura,promedio,fecha)" +
-                                                                          "VALUES (@numReloj,@turno,@regionLote,@loteCorrecto,@lote,@codigoBarras,@nombreProducto,@p1Peso,@p2Sellado,@p3Apariencia,@p4Sabor,@p5Textura,@promedio,@fecha)",con);
+                    SqlCommand cmd2 = new SqlCommand("INSERT INTO dbo.evaluaciones(numReloj,planta,turno,regionLote,loteCorrecto,lote,codigoBarras,nombreProducto,p1Peso,p2Sellado,p3Apariencia,p4Sabor,p5Textura,promedio,fecha)" +
+                                                                          "VALUES (@numReloj,@planta,@turno,@regionLote,@loteCorrecto,@lote,@codigoBarras,@nombreProducto,@p1Peso,@p2Sellado,@p3Apariencia,@p4Sabor,@p5Textura,@promedio,@fecha)",con);
                     cmd2.Parameters.AddWithValue("@numReloj", Convert.ToInt32(e.numReloj));
+                    cmd2.Parameters.AddWithValue("@planta", Convert.ToString(e.planta));
                     cmd2.Parameters.AddWithValue("@turno", Convert.ToString(e.turno));
                     cmd2.Parameters.AddWithValue("@regionLote", Convert.ToString(e.regionSeleccionada));
                     cmd2.Parameters.AddWithValue("@loteCorrecto", e.loteCorrecto.ToString().ToUpper());
@@ -54,6 +55,7 @@ namespace ECP_MFF.Controllers.Api
         public class model
         {
             public int numReloj { get; set; }
+            public string planta{ get; set; }
             public string turno{ get; set; }
             public string regionSeleccionada{ get; set; }
             public string loteCorrecto{ get; set; }

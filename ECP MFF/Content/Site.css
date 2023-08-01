@@ -7,7 +7,56 @@ body {
     overflow-x: hidden;
 }
 
-/*#lblPromedio*/
+/*table.dataTable.display tbody tr.odd > .sorting_1 {
+    background-color: red;
+}
+
+table.dataTable.display tbody tr.odd {
+    background-color: red;
+}*/
+table.dataTable.display tbody tr.greenClass > .sorting_1 {
+    background-color: lawngreen;
+    opacity:1;
+}
+
+table.dataTable.display tbody tr.greenClass {
+    background-color: lawngreen;
+}
+
+table.dataTable.display tbody tr.yellowClass > .sorting_1 {
+    background-color: yellow;
+}
+
+table.dataTable.display tbody tr.yellowClass {
+    background-color: yellow;
+}
+
+table.dataTable.display tbody tr.orangeClass > .sorting_1 {
+    background-color: orangered;
+}
+
+table.dataTable.display tbody tr.orangeClass {
+    background-color: orangered;
+}
+
+table.dataTable.display tbody tr.redClass > .sorting_1 {
+    background-color: red;
+}
+
+table.dataTable.display tbody tr.redClass {
+    background-color: red;
+}
+
+
+#lblPromedio {
+    background: gray;
+    background-position: center;
+    font-size: 800%;
+    border-radius: 30px;
+    padding:10px;
+    color: black;
+}
+
 
 #sidebar-wrapper {
     min-height: 100vh;
