@@ -5,8 +5,6 @@
 
 <h2>@ViewBag.Title.</h2>
 
-@*<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css">*@
-@*<link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/4.3.0/css/fixedColumns.dataTables.min.css">*@
 <link rel="stylesheet" href="~/Content/jquery.dataTables.min.css">
 <link rel="stylesheet" href="~/Content/buttons.dataTables.min.css">
 
@@ -18,8 +16,13 @@
 <script src="~/Scripts/dataTables.buttons.min.js"></script>
 <script src="~/Scripts/jzip.min.js"></script>
 <script src="~/Scripts/buttons.html5.min.js"></script>
-@*<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js">*@
-@*<link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/4.3.0/js/dataTables.fixedColumns.min.js">*@
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/data.js"></script>
+<script src="https://code.highcharts.com/modules/drilldown.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
 
 <div class="container-fluid">
     <br />
@@ -54,6 +57,9 @@
         </div>
     </div>
     <br />
+    <div id="containerGra">
+
+    </div>
     <table id="reporteGeneral" class="display table-striped table-bordered" style="width:100%">
         <thead>
             <tr>
@@ -86,9 +92,9 @@
         </tbody>
     </table>
 </div>
-
-<script>    
-    $('#reporteGeneral').hide();   
+<script src="~/Scripts/grafica.js"></script>
+<script>
+    $('#reporteGeneral').hide();
     $("#btnBuscarEva").on("click", function (e) {
         $("#lblTextoInformacion").empty();
         $("#lblModalCampoInvalido").empty();
@@ -195,20 +201,22 @@
             contentType: "application/json;charset=utf-8",
             dataType: 'json',
             data: JSON.stringify(model),
-            success: function (result) {                
+            success: function (result) {
                 $("#lblPromedio").empty();
-                var codigoB="";
+                var codigoB = "";
                 var promedio = 0;
                 var cont = 0;
-                jQuery.each(result, function (i, val) {
+                var jsObject=[];
+                jQuery.each(result, function (i, val) {                    
+                    jsObject.push({ name: val.fecha, y: parseInt(val.promedio)});
                     codigoB = val.codigoBarras;
                     promedio = promedio + parseInt(val.promedio);
                     cont++;
                 });
                 var prom = promedio / cont;
                 $("#lblPromedio").append(prom + "%");
-                if (prom >=90) {
-                    $("#lblPromedio").css("background-color", "lawngreen");                 
+                if (prom >= 90) {
+                    $("#lblPromedio").css("background-color", "lawngreen");
                 }
                 if (prom <= 89) {
                     $("#lblPromedio").css("background-color", "yellow");
@@ -219,7 +227,8 @@
                 if (prom <= 50) {
                     $("#lblPromedio").css("background-color", "red");
                 }
-                $("#imgProducto").attr("src","/Images/Products/"+codigoB+".png");
+                $("#imgProducto").attr("src", "/Images/Products/" + codigoB + ".png");                
+                GraficaBarraReporteGeneral(JSON.stringify(jsObject));
             },
             fail: function () {
 

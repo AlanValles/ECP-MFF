@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ECP_MFF.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -25,6 +26,12 @@ namespace ECP_MFF.Controllers
             ViewBag.Message = "";
 
             return View();
+        }
+
+        public JsonResult GraficaReporteGeneral()
+        {
+            GraficaReporteGeneral grafica = new GraficaReporteGeneral();
+            return Json(grafica);
         }
     }
 }
