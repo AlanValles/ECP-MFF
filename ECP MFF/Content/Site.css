@@ -7,16 +7,9 @@ body {
     overflow-x: hidden;
 }
 
-/*table.dataTable.display tbody tr.odd > .sorting_1 {
-    background-color: red;
-}
-
-table.dataTable.display tbody tr.odd {
-    background-color: red;
-}*/
 table.dataTable.display tbody tr.greenClass > .sorting_1 {
     background-color: lawngreen;
-    opacity:1;
+    opacity: 1;
 }
 
 table.dataTable.display tbody tr.greenClass {

@@ -49,10 +49,13 @@
     <hr />
     <br />
     <div class="row">
-        <div class="col-6" align="center">
+        <div class="col-3" align="center">
+            <img src="~/Images/Semaforo.png" class="img-fluid">
+        </div>
+        <div class="col-5" align="center">
             <img id="imgProducto" src="~/Images/producto-sin-imagen.png" class="img-fluid" style="width:300px; height:300px">
         </div>
-        <div class="col-6" align="center">
+        <div class="col-4" align="center">
             <label id="lblPromedio">0%</label>
         </div>
     </div>
@@ -60,6 +63,7 @@
     <div id="containerGra">
 
     </div>
+    <br />
     <table id="reporteGeneral" class="display table-striped table-bordered" style="width:100%">
         <thead>
             <tr>
@@ -206,9 +210,23 @@
                 var codigoB = "";
                 var promedio = 0;
                 var cont = 0;
-                var jsObject=[];
-                jQuery.each(result, function (i, val) {                    
-                    jsObject.push({ name: val.fecha, y: parseInt(val.promedio)});
+                var jsObject = [];
+                var colorChart="";
+                jQuery.each(result, function (i, val) {
+                    colorChart = "";
+                    if (val.promedio >=90) {
+                        colorChart = "lawngreen";
+                    }
+                    if (val.promedio <= 89) {
+                        colorChart = "yellow";
+                    }
+                    if (val.promedio <= 74) {
+                        colorChart = "orange";
+                    }
+                    if (val.promedio <= 50) {
+                        colorChart = "red";
+                    }
+                    jsObject.push({ name: val.fecha, y: parseInt(val.promedio), color: colorChart});
                     codigoB = val.codigoBarras;
                     promedio = promedio + parseInt(val.promedio);
                     cont++;
